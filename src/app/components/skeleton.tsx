@@ -22,7 +22,7 @@ export function ListSkeleton() {
   }
 
 
-export const SkeletonMessage = React.FC<{}> = () => {
+export const SkeletonMessage = () => {
   <div className="message p-4 rounded-lg shadow-sm bg-gray-700">
     <div className="h-4 rounded-full w-full bg-gray-500 animate-pulse" />
     <div className="mt-2 flex space-x-2">
