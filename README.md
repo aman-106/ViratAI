@@ -14,7 +14,7 @@ npm run dev
 
 Open [http://localhost:3000/chat](http://localhost:3000/chat) with your browser to see the result.
 
-![Demo Video](https://youtu.be/mH0e47zoPUw)
+**Demo Video:** [AI Chat APP](https://youtu.be/mH0e47zoPUw)
 
 ### Chat Application High-Level Design
 
