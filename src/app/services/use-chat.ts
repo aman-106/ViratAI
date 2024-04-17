@@ -5,9 +5,9 @@ import { marked } from "marked";
 import { useState, useEffect } from "react";
 import { IMsg, ROLE } from "./interface";
 import { convertMessages } from "./convert-messages";
+import { loadChatHistoryByID } from "./load-chat-from-db";
 
 export const useChat = () => {
-  // const [aiResponse, setAiResponse] = useState<String>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);
   const [chatHistory, setChatHistory] = useState<Array<IMsg>>([]);
@@ -74,5 +74,21 @@ export const useChat = () => {
     }
   };
 
-  return { chatHistory, isLoading, error, sendMessage };
+  const loadChatHistory = async (chatid:Array<string> | undefined)=>{
+    try {
+        if(chatid?.length && chatid[0] ){
+          setIsLoading(true);
+          const data = await loadChatHistoryByID(chatid[0]);
+          setChatHistory(data);
+        }else{
+          console.error(`unable load for specfic chatid ${chatid}`)
+        }
+    } catch (error) {
+      console.error('unable to load')
+    }finally{
+      setIsLoading(false);
+    }
+  }
+
+  return { chatHistory, isLoading, error, sendMessage,loadChatHistory };
 };
