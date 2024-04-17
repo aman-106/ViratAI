@@ -4,33 +4,79 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 First, run the development server:
 
+
+Add Open API key in .env file
+
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000/chat](http://localhost:3000/chat) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Chat Application High-Level Design
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+#### Overview
 
-## Learn More
+It allows users to send prompts to Open AI, view chat history, and manage favorite prompts.
 
-To learn more about Next.js, take a look at the following resources:
+The application is built using React for the front end and integrates with IndexedDB for local data storage. The key features and components of the chat application include:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+#### Key Features
+1. **AI Chat Bot**: Users can chat with AI bot using OPEN AI APIs
+2. **Chat History**: Display of previous messages within a chat session.
+3. **Favorite Messages**: Ability to mark and save favorite prompts.
+4. **Data Persistence**: Utilization of IndexedDB to store chat histories and favorite prompts locally.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+#### Components
+1. **Chat Page Component**
+   - Manages the layout of the chat interface.
+   - Renders the `ChatInput` component for user message input.
+   - Displays the `MessageList` component to show chat messages.
+   - Utilizes the `MessageLoader` component for indicating loading states.
 
-## Deploy on Vercel
+2. **ChatInput Component**
+   - Provides an input field for users to type and send messages.
+   - Sends user prompts to the chat backend via the `useChat` hook.
+   - Supports sending prompts on pressing the "Enter" key.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. **MessageList Component**
+   - Receives and displays a list of chat messages.
+   - Automatically scrolls to the latest message when new messages are added.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+4. **MessageLoader Component**
+   - Displays loading indicators during message retrieval and sending.
+
+5. **SavedInputsList Component**
+   - Displays a list of saved favorite user inputs.
+   - Allows users to copy saved inputs to the clipboard.
+
+#### External Services and Hooks
+1. **useChat Hook**
+   - Manages sending and loading of chat messages through API calls.
+   - Handles message persistence using IndexedDB for local storage.
+
+2. **useIndexedDBWorker Hook**
+   - Integrates with IndexedDB for efficient storage of chat histories.
+   - Utilizes a web worker for background processing of IndexedDB operations.
+
+#### Dependencies
+- **React**: Front-end library for building user interfaces.
+- **IndexedDB**: Browser-based NoSQL database for local data storage.
+- **Web Worker**: Provides a background thread for handling heavy data operations.
+- **Tailwind CSS**: Utility-first CSS framework for styling components.
+
+#### Implementation Details
+- **State Management**: Uses React's state and custom hooks for managing application state.
+- **Asynchronous Operations**: Leverages async/await for handling asynchronous operations like API calls and IndexedDB interactions.
+- **Component Composition**: Encapsulates logic into reusable components for modularity and maintainability.
+- **Error Handling**: Implements error handling for API requests and local storage operations.
+
+#### Next Steps
+1. Enhance UI/UX with additional styling and animations, accessibility, responsive design, error handling (display), theme.
+2. Implement user authentication and user-specific chat sessions.
+3. Optimize IndexedDB usage for improved performance.
+4. Add unit tests and integration tests to ensure application reliability.
+5. Add optimize like virtual list for large data set
+
+This high-level design document outlines the architecture, features, and components of the chat application, providing a roadmap for implementation and future enhancements.
